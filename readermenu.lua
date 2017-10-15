@@ -442,9 +442,14 @@ function ReaderMenu:onShowReaderMenu()
         local close_reader_item = {
             text = _("Close Document"),
             callback = function()
-                self.ui:handleEvent(Event:new("CloseDocument"))
+                self:onTapCloseMenu()
+                self.ui:onClose()
+                self.ui:showFileManager()
             end,
         }
+
+        
+        
 
         table.insert(myItems, close_reader_item)
 
@@ -476,7 +481,10 @@ function ReaderMenu:onShowReaderMenu()
 
 
         local originalItems = Menu.itemTableFromTouchMenu(self.tab_item_table)
-        for k,v in pairs(originalItems) do table.insert(myItems, v) end
+        for k,v in pairs(originalItems) do 
+            v.text = k
+            table.insert(myItems, v) 
+        end
 
         main_menu = Menu:new{
             title = _("Document menu"),
